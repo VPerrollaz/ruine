@@ -1,24 +1,33 @@
+extern crate clap;
 extern crate rand;
 
+use clap::App;
 use rand::distributions::Bernoulli;
 use rand::distributions::Distribution;
 
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
-    let proba: f64;
-    if args.len()  >= 2 {
-         match args[1].parse() {
-             Ok(nombre) => proba = nombre,
-             _ => proba = 0.5f64,
-         }
-    }
-    else {
-         proba = 0.5f64;
-    }
+    let matches = App::new("Ruine du joueur")
+                            .version("0.1")
+                            .author("Vincent Perrollaz <vincent.perrollaz@laposte.net>")
+                            .about("Calcul des probabilités de gains dans un jeu de pile ou face répété")
+                            .args_from_usage(
+                                "-p, --proba=[proba] 'Probabilité de gain du pile ou face'
+                                 -n, --nb_parties=[nb_parties] 'Nombre de parties joués pour estimer une probabilité'
+                                 -f, --f_max=[f_max] 'Fortune visée par le joueur pour s'arrêter'
+                                 -m, --mode=[seq|par] 'Calculs sequentiels ou parallélisés'")
+                            .get_matches();
 
-    let resultats = parallele(100i16, 1000u32, proba);
+    let proba: f64 = matches.value_of("proba").unwrap_or("0.5").parse().unwrap();
+    let nb_parties: u32 = matches.value_of("nb_parties").unwrap_or("1000").parse().unwrap();
+    let f_max: i16 = matches.value_of("f_max").unwrap_or("100").parse().unwrap();
+    println!("Appel de la fonction avec 
+    proba = {}
+    nb_parties = {}
+    f_max = {}", proba, nb_parties, f_max);
+    
+    // let resultats = parallele(100i16, 1000u32, proba);
 
-    affichage(&resultats);
+    // affichage(&resultats);
 }
 
 fn affichage(tableau: &[f64]) {
