@@ -1,0 +1,8 @@
+[package]
+name = "ruine"
+version = "0.1.0"
+authors = ["Vincent Perrollaz <vincent.perrollaz@laposte.net>"]
+
+[dependencies]
+rand = "*"
+rayon = "*"
