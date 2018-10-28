@@ -14,7 +14,7 @@ fn main() {
                                 "-p, --proba=[proba] 'Probabilité de gain du pile ou face'
                                  -n, --nb_parties=[nb_parties] 'Nombre de parties joués pour estimer une probabilité'
                                  -f, --f_max=[f_max] 'Fortune visée par le joueur pour s'arrêter'
-                                 -m, --mode=[seq|par] 'Calculs sequentiels ou parallélisés'")
+                                 -s, --seq 'Calculs sequentiels, par défaut en parallèle'")
                             .get_matches();
 
     let proba: f64 = matches.value_of("proba").unwrap_or("0.5").parse().unwrap();
@@ -24,7 +24,14 @@ fn main() {
     proba = {}
     nb_parties = {}
     f_max = {}", proba, nb_parties, f_max);
-    
+
+    if matches.is_present("seq") {
+        println!("Calculs effectués séquentiellement.");
+    }
+    else {
+        println!("Calculs effectués parallèlement.");
+    }
+
     // let resultats = parallele(100i16, 1000u32, proba);
 
     // affichage(&resultats);
