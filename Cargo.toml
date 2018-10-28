@@ -7,3 +7,4 @@ authors = ["Vincent Perrollaz <vincent.perrollaz@laposte.net>"]
 clap = "*"
 rand = "*"
 rayon = "*"
+serde = "*"
