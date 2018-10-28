@@ -1,11 +1,37 @@
+#[macro_use]
+extern crate serde_derive;
+
 extern crate clap;
 extern crate rand;
 extern crate rayon;
+extern crate serde;
+extern crate serde_json;
 
 use clap::App;
 use rand::distributions::Bernoulli;
 use rand::distributions::Distribution;
 use rayon::prelude::*;
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Resultat {
+    f_max : i16,
+    nb_parties : u32,
+    proba : f64,
+    seq : bool,
+    valeurs:  Vec<f64>
+}
+
+impl Resultat {
+    fn new(f_max: i16, nb_parties: u32, proba: f64, seq: bool, valeurs: Vec<f64>) -> Resultat {
+        Resultat {
+            f_max : f_max,
+            nb_parties : nb_parties,
+            proba : proba,
+            seq : seq,
+            valeurs : valeurs
+        }
+    }
+}
 
 fn main() {
     let matches = App::new("Ruine du joueur")
@@ -24,18 +50,13 @@ fn main() {
     let f_max: i16 = matches.value_of("f_max").unwrap_or("10").parse().unwrap();
 
     if matches.is_present("seq") {
-        affichage(sequentiel(f_max, nb_parties, proba));
+        let res = Resultat::new(f_max, nb_parties, proba, true, sequentiel(f_max, nb_parties, proba));
+        println!("{}", serde_json::to_string(&res).unwrap());
     }
     else {
-        affichage(parallele(f_max, nb_parties, proba));
+        let res = Resultat::new(f_max, nb_parties, proba, false, parallele(f_max, nb_parties, proba));
+        println!("{}", serde_json::to_string(&res).unwrap());
     }
-}
-
-fn affichage(tableau: Vec<f64>) {
-    for val in tableau.iter() {
-        print!("{}, ", val);
-    }
-    print!("\n");
 }
 
 fn sequentiel(f_max: i16, nb_parties: u32, proba: f64) -> Vec<f64> {
