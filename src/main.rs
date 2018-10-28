@@ -37,10 +37,10 @@ fn main() {
     let matches = App::new("Ruine du joueur")
                             .version("0.1")
                             .author("Vincent Perrollaz <vincent.perrollaz@laposte.net>")
-                            .about("Calcul des probabilités de gains dans un jeu de pile ou face répété")
+                            .about("Calcul des probabilités de gains dans un jeu de pile ou face répétés")
                             .args_from_usage(
                                 "-p, --proba=[proba] 'Probabilité de gain du pile ou face'
-                                 -n, --nb_parties=[nb_parties] 'Nombre de parties joués pour estimer une probabilité'
+                                 -n, --nb_parties=[nb_parties] 'Nombre de parties jouées pour estimer une probabilité'
                                  -f, --f_max=[f_max] 'Fortune visée par le joueur pour s'arrêter'
                                  -s, --seq 'Calculs sequentiels, par défaut en parallèle'")
                             .get_matches();
