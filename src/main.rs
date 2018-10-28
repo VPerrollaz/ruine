@@ -1,9 +1,11 @@
 extern crate clap;
 extern crate rand;
+extern crate rayon;
 
 use clap::App;
 use rand::distributions::Bernoulli;
 use rand::distributions::Distribution;
+use rayon::prelude::*;
 
 fn main() {
     let matches = App::new("Ruine du joueur")
@@ -18,53 +20,34 @@ fn main() {
                             .get_matches();
 
     let proba: f64 = matches.value_of("proba").unwrap_or("0.5").parse().unwrap();
-    let nb_parties: u32 = matches.value_of("nb_parties").unwrap_or("1000").parse().unwrap();
-    let f_max: i16 = matches.value_of("f_max").unwrap_or("100").parse().unwrap();
-    println!("Appel de la fonction avec 
-    proba = {}
-    nb_parties = {}
-    f_max = {}", proba, nb_parties, f_max);
+    let nb_parties: u32 = matches.value_of("nb_parties").unwrap_or("100").parse().unwrap();
+    let f_max: i16 = matches.value_of("f_max").unwrap_or("10").parse().unwrap();
 
     if matches.is_present("seq") {
-        println!("Calculs effectués séquentiellement.");
+        affichage(sequentiel(f_max, nb_parties, proba));
     }
     else {
-        println!("Calculs effectués parallèlement.");
+        affichage(parallele(f_max, nb_parties, proba));
     }
-
-    // let resultats = parallele(100i16, 1000u32, proba);
-
-    // affichage(&resultats);
 }
 
-fn affichage(tableau: &[f64]) {
+fn affichage(tableau: Vec<f64>) {
     for val in tableau.iter() {
         print!("{}, ", val);
     }
+    print!("\n");
+}
+
+fn sequentiel(f_max: i16, nb_parties: u32, proba: f64) -> Vec<f64> {
+    (1..f_max as usize).into_iter()
+              .map( |f_ini| {estimation_proba(f_ini as i16, f_max, nb_parties, proba)} )
+              .collect()
 }
 
 fn parallele(f_max: i16, nb_parties: u32, proba: f64) -> Vec<f64> {
-    let mut children = vec![];
-    for depart in 0..4 {
-        children.push(std::thread::spawn(move || { let mut resultat = vec![];
-            for i in 0..25 {
-                resultat.push(estimation_proba((i+25*depart) as i16,
-                                               f_max,
-                                               nb_parties,
-                                               proba));
-            }
-            resultat
-        }));
-    }
-
-    let mut resultats = vec![0.0f64; f_max as usize];
-    for (i, child) in children.into_iter().enumerate() {
-        for (j, val) in child.join().unwrap().iter().enumerate() {
-            resultats[25*i+j] = *val;
-        }
-    }
-
-    resultats
+    (1..f_max as usize).into_par_iter()
+              .map( |f_ini| {estimation_proba(f_ini as i16, f_max, nb_parties, proba)} )
+              .collect()
 }
 
 fn une_partie(f_ini: i16, f_max:i16, d: &Bernoulli, gen: &mut rand::ThreadRng) -> bool {
