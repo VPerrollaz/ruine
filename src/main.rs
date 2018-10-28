@@ -82,7 +82,7 @@ fn une_partie(f_ini: i16, f_max:i16, d: &Bernoulli, gen: &mut rand::ThreadRng) -
 fn estimation_proba(f_ini: i16, f_max: i16, nb_parties: u32, proba: f64) -> f64 {
     let d = Bernoulli::new(proba);
     let mut gen = rand::thread_rng();
-    let mut nb_victoires = 0u16;
+    let mut nb_victoires = 0u32;
     for _ in 0..nb_parties {
         if une_partie(f_ini, f_max, &d, &mut gen) {
             nb_victoires += 1;
