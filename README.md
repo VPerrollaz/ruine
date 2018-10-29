@@ -6,7 +6,7 @@ accélérer l'exécution, les résultats sont sérialisés en json.
 
 ## Installation
 
-`ruine`  est écrit en Rust, il est nécessaire d'avoir une (installation Rust)[https://rustup.rs/]
+`ruine`  est écrit en Rust, il est nécessaire d'avoir une [installation Rust](https://rustup.rs/)
 pour pouvoir le compiler via  
 ```
 $ cargo build --release
