@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="ruine">ruine</h1>
+<h2 id="description-mathématique-du-problème">Description mathématique du problème</h2>
+<p>On se donne<br />
+- un réel <span class="math inline"><em>p</em> ∈ [0, 1]</span>, - un entier positif <span class="math inline"><em>M</em></span> - un entier <span class="math inline"><em>x</em> ∈ [0, <em>M</em>]</span></p>
+<p>On considère alors une suite de variables aléatoires <span class="math inline">(<em>X</em><sub><em>n</em></sub>)<sub><em>n</em> ≥ 0</sub></span> satisfaisant</p>
+<p><br /><span class="math display">∀<em>n</em> ≥ 0,  ℙ(<em>X</em><sub><em>n</em> + 1</sub> = <em>y</em> + 1|<em>X</em><sub><em>n</em></sub> = <em>y</em>) = <em>p</em>, ℙ(<em>X</em><sub><em>n</em> + 1</sub> = <em>y</em> − 1|<em>X</em><sub><em>n</em></sub> = <em>y</em>) = 1 − <em>p</em>,</span><br /></p>
+<p><br /><span class="math display">ℙ(<em>X</em><sub>0</sub> = <em>x</em>) = 1.</span><br /></p>
+<p>On construit alors le temps d’arrêt</p>
+<p><br /><span class="math display"><em>T</em> := inf {<em>n</em> ≥ 0 : <em>X</em><sub><em>n</em></sub> = 0 ou <em>X</em><sub><em>n</em></sub> = <em>M</em>}.</span><br /></p>
+<p>On veut une estimation de <span class="math inline">ℙ(<em>X</em><sub><em>T</em></sub> = <em>M</em>)</span> en fonction des paramètres via une méthode de Monte Carlo.</p>
+<p>On notera qu’il existe des méthodes pour résoudre analytiquement le problème, soit en se basant sur la propriété de Markov soit via des techniques de Martingales.</p>
+</body>
+</html>
