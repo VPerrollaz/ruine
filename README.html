@@ -17,6 +17,35 @@
 </head>
 <body>
 <h1 id="ruine">ruine</h1>
+<p><code>ruine</code> est un utilitaire en ligne de commande permettant d’estimer les probabilités de gain dans le problème de la ruine du joueur. Le calcul est par défaut effectué en parallèle pour accélérer l’exécution, les résultats sont sérialisés en json.</p>
+<h2 id="installation">Installation</h2>
+<p><code>ruine</code> est écrit en Rust, il est nécessaire d’avoir une (installation Rust)[https://rustup.rs/] pour pouvoir le compiler via</p>
+<pre><code>$ cargo build --release</code></pre>
+<h2 id="exemple">Exemple</h2>
+<p>On peut utiliser les valeurs par défaut</p>
+<pre><code>$ ruine
+{&quot;f_max&quot;:10,&quot;nb_parties&quot;:100,&quot;proba&quot;:0.5,&quot;seq&quot;:false,&quot;valeurs&quot;:[0.13,0.27,0.26,0.47,0.48,0.69,0.75,0.76,0.95]}</code></pre>
+<p>On peut obtenir la documentation</p>
+<pre><code>$ ruine -h
+Ruine du joueur 0.1
+Vincent Perrollaz &lt;vincent.perrollaz@laposte.net&gt;
+Calcul des probabilités de gains dans un jeu de pile ou face répétés
+
+USAGE:
+    ruine [FLAGS] [OPTIONS]
+
+FLAGS:
+    -h, --help       Prints help information
+    -s, --seq        Calculs sequentiels, par défaut en parallèle
+    -V, --version    Prints version information
+
+OPTIONS:
+    -f, --f_max &lt;f_max&gt;              Fortune visée par le joueur pour s&#39;arrêter
+    -n, --nb_parties &lt;nb_parties&gt;    Nombre de parties jouées pour estimer une probabilité
+    -p, --proba &lt;proba&gt;              Probabilité de gain du pile ou face</code></pre>
+<p>Exemple avec des paramètres</p>
+<pre><code>$ ruine -n 10000 -p 0.49 -f 50
+{&quot;f_max&quot;:50,&quot;nb_parties&quot;:10000,&quot;proba&quot;:0.49,&quot;seq&quot;:false,&quot;valeurs&quot;:[0.0058,0.0129,0.0206,0.0286,0.0349,0.0413,0.0528,0.0571,0.068,0.08,0.0835,0.0914,0.1118,0.1141,0.1305,0.1349,0.1497,0.1628,0.1736,0.1883,0.2048,0.2178,0.2286,0.2624,0.2733,0.291,0.3033,0.3301,0.3432,0.3607,0.3815,0.4046,0.4262,0.4486,0.4752,0.5089,0.5379,0.5592,0.5846,0.6251,0.6501,0.6833,0.7243,0.751,0.7957,0.8328,0.8669,0.908,0.9561]}</code></pre>
 <h2 id="description-mathématique-du-problème">Description mathématique du problème</h2>
 <p>On se donne<br />
 - un réel <span class="math inline"><em>p</em> ∈ [0, 1]</span>, - un entier positif <span class="math inline"><em>M</em></span> - un entier <span class="math inline"><em>x</em> ∈ [0, <em>M</em>]</span></p>
